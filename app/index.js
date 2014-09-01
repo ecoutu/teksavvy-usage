@@ -46,8 +46,8 @@ var teksavvyClient = new TeksavvyClient({
 });
 
 var usageController = new UsageController({teksavvyClient: teksavvyClient});
-app.get('/usage/:api_key', function(req, res) {
-  usageController.usage.apply(usageController, arguments);
+app.get('/usage/:api_key/on-peak-download', function(req, res) {
+  usageController.onPeakDownload.apply(usageController, arguments);
 });
 
 logger.info('Express listening on port %d', port);
