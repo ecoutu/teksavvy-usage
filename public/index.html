@@ -52,6 +52,7 @@
           }
         });
         $('#selection-menu').show();
+        $('#filter-menu').show();
       });
     });
     $('#on-peak-download').click(function() {
@@ -82,11 +83,34 @@
         chart.hide('Off Peak Upload');
       }
     });
+    $('#start-date-filter-enabled').click(function() {
+      if (this.checked) {
+        $('#start-date-filter').removeAttr('disabled');
+      } else {
+        $('#start-date-filter').attr('disabled', 'disabled');
+      }
+    });
+    $('#end-date-filter-enabled').click(function() {
+      if (this.checked) {
+        $('#end-date-filter').removeAttr('disabled');
+      } else {
+        $('#end-date-filter').attr('disabled', 'disabled');
+      }
+    });
+    $('#start-date-filter').blur(function() {
+      console.log('wat');
+    });
    });
 </script>
 <style>
 #selection-menu {
   display: none;
+  float: left;
+}
+#filter-menu {
+  display:none;
+  float: left;
+  padding-left: 50px;
 }
 </style>
  </head>
@@ -100,7 +124,10 @@ API Key <input type="text" id="api-key" value="8C2A92AA9A08B06EFD9A6CCEB37D7606"
   <input type="checkbox" id="on-peak-upload" checked="true">On Peak Upload</input><br />
   <input type="checkbox" id="off-peak-download" checked="true">Off Peak Download</input><br />
   <input type="checkbox" id="off-peak-upload" checked="true">Off Peak Upload</input><br />
-
+</div>
+<div id="filter-menu">
+<input type="checkbox" id="start-date-filter-enabled">Start</input> <input type="date" id="start-date-filter" disabled="disabled"></input><br />
+<input type="checkbox" id="end-date-filter-enabled">End&nbsp;</input> <input type="date" id="end-date-filter" disabled="disabled"></input><br />
 </div>
 </body>
 </html>

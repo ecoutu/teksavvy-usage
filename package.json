@@ -21,6 +21,7 @@
     "express-bunyan-logger": "^1.0.0",
     "method-override": "^2.1.2",
     "moment": "~2.8.1",
+    "moment-range": "^1.0.2",
     "request": "^2.39.0",
     "rsvp": "^3.0.9",
     "underscore": "^1.6.0"

@@ -1,5 +1,6 @@
 var _ = require('underscore');
 var moment = require('moment');
+var momentRange = require('moment-range');
 var RSVP = require('rsvp');
 
 var logger = require('../utility/logger').createLogger('teksavvy-client');
@@ -17,8 +18,16 @@ var UsageController = function(options) {
 
 _.extend(UsageController.prototype, {
   usage: function(req, res) {
-    // var start = req.query.start;
-    // var end = req.query.end;
+    var startDate = null;
+    var endDate =  null;
+
+    if (req.query.start) {
+      startDate = moment(req.query.start);
+    }
+    if (req.query.end) {
+      endDate = moment(req.query.end);
+    }
+
     this.teksavvyClient.getUsage(req.params.api_key).then(function(usage) {
       var xAxis = ['x'];
 
@@ -27,14 +36,32 @@ _.extend(UsageController.prototype, {
       var offPeakDownload = ['Off Peak Download'];
       var offPeakUpload = ['Off Peak Upload'];
 
-      logger.info(usage);
+      usage = _.filter(usage, function(us) {
+        var usDate = moment(us.Date);
+        if (startDate && usDate < startDate) {
+          return false;
+        } else if (endDate && usDate > endDate) {
+          return false;
+        } else {
+          return true;
+        }
+      });
 
       _.each(usage, function(us) {
+        var uDate = moment(us.Date);
+
+        if (startDate && uDate < startDate) {
+          logger.info('%s is less than %s', uDate, startDate);
+        }
+        if (endDate && uDate > endDate) {
+          logger.info('%s is greater than %s', uDate, endDate);
+        }
+
         // need to change date format - c3's date parsing sucks
         xAxis.push(moment(us.Date).format('YYYY-MM-DD'));
         onPeakDownload.push(us.OnPeakDownload);
         onPeakUpload.push(us.OnPeakUpload);
-        offPeakDownload.push(us.OffPeakDownload);
+        offPeakDownload.push(us.OffPeakDownload)
         offPeakUpload.push(us.OffPeakUpload);
       });
 
