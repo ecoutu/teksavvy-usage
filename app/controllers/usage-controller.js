@@ -16,7 +16,7 @@ var UsageController = function(options) {
 }
 
 _.extend(UsageController.prototype, {
-  onPeakDownload: function(req, res) {
+  usage: function(req, res) {
     // var start = req.query.start;
     // var end = req.query.end;
     this.teksavvyClient.getUsage(req.params.api_key).then(function(usage) {
