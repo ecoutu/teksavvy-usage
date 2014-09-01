@@ -20,39 +20,40 @@
  <script type="text/javascript">
  var chart = null;
    $(document).ready(function() {
-
-    $.getJSON('usage/8C2A92AA9A08B06EFD9A6CCEB37D7606/on-peak-download', function(res) {
-      console.log(res);
-      chart = c3.generate({
-        bindto: '#chart',
-        data: {
-          x: 'x',
-          columns: [
-            res.xAxis,
-            res.onPeakDownload,
-            res.onPeakUpload,
-            res.offPeakDownload,
-            res.offPeakUpload
-          ]
-        },
-        axis: {
-          x: {
-            type: 'timeseries',
-            tick: {
-              format: '%Y-%m-%d'
+    $('#submit').click(function() {
+      var apiKey = $('#api-key').val();
+      $.getJSON('usage/'+apiKey+'/on-peak-download', function(res) {
+        console.log(res);
+        chart = c3.generate({
+          bindto: '#chart',
+          data: {
+            x: 'x',
+            columns: [
+              res.xAxis,
+              res.onPeakDownload,
+              res.onPeakUpload,
+              res.offPeakDownload,
+              res.offPeakUpload
+            ]
+          },
+          axis: {
+            x: {
+              type: 'timeseries',
+              tick: {
+                format: '%Y-%m-%d'
+              }
             }
           }
-        }
+        });
       });
     });
-
    });
- </script>
-
-
  </script>
  </head>
 <body>
+<div>
+API Key <input type="text" id="api-key"></input> <input type="button" value="Submit" id="submit"></input>
+</div>
 <div id="chart"></div>
 </body>
 </html>
