@@ -23,7 +23,6 @@
     $('#submit').click(function() {
       var apiKey = $('#api-key').val();
       $.getJSON('usage/'+apiKey+'/on-peak-download', function(res) {
-        console.log(res);
         chart = c3.generate({
           bindto: '#chart',
           data: {
@@ -41,6 +40,12 @@
               type: 'timeseries',
               tick: {
                 format: '%Y-%m-%d'
+              }
+            },
+            y: {
+              label: {
+                text: 'Usage (GB)',
+                position: 'outer-middle'
               }
             }
           }
