@@ -17,24 +17,52 @@
  <script src="js/bower_components/d3/d3.min.js" charset="utf-8"></script>
  <script src="js/bower_components/c3/c3.min.js"></script>
  <script src="js/bower_components/jquery/dist/jquery.js"></script>
+ <script src="js/bower_components/moment/moment.js"></script>
+ <script src="js/bower_components/underscore/underscore.js"></script>
  <script type="text/javascript">
- var chart = null;
-   $(document).ready(function() {
-    var chart = null;
+  var chart = null;
+  $(document).ready(function() {
+    var usage = null;
+
+    var loadData = function(usage) {
+      var xAxis = ['x'];
+
+      var onPeakDownload = ['On Peak Download'];
+      var onPeakUpload = ['On Peak Upload'];
+      var offPeakDownload = ['Off Peak Download'];
+      var offPeakUpload = ['Off Peak Upload'];
+
+      _.each(usage, function(us) {
+        var uDate = moment(us.Date);
+
+        // need to change date format - c3's date parsing sucks
+        xAxis.push(moment(us.Date).format('YYYY-MM-DD'));
+        onPeakDownload.push(us.OnPeakDownload);
+        onPeakUpload.push(us.OnPeakUpload);
+        offPeakDownload.push(us.OffPeakDownload)
+        offPeakUpload.push(us.OffPeakUpload);
+      });
+      chart.load({
+        columns: [
+          xAxis,
+          onPeakDownload,
+          onPeakUpload,
+          offPeakDownload,
+          offPeakUpload
+        ]
+      });
+    };
+
     $('#submit').click(function() {
       var apiKey = $('#api-key').val();
       $.getJSON('usage/'+apiKey, function(res) {
+        usage = res;
+
         chart = c3.generate({
           bindto: '#chart',
           data: {
             x: 'x',
-            columns: [
-              res.xAxis,
-              res.onPeakDownload,
-              res.onPeakUpload,
-              res.offPeakDownload,
-              res.offPeakUpload
-            ]
+            columns: []
           },
           axis: {
             x: {
@@ -51,6 +79,7 @@
             }
           }
         });
+        loadData(usage);
         $('#selection-menu').show();
         $('#filter-menu').show();
       });
@@ -97,8 +126,29 @@
         $('#end-date-filter').attr('disabled', 'disabled');
       }
     });
-    $('#start-date-filter').blur(function() {
-      console.log('wat');
+    $('#start-date-filter, #end-date-filter').change(function() {
+
+      var startDate = $('#start-date-filter').val();
+      var endDate = $('#end-date-filter').val();
+
+      if (startDate) {
+        startDate = moment(startDate);
+      }
+      if (endDate) {
+        endDate = moment(endDate);
+      }
+
+      var filteredUsage = _.filter(usage, function(us) {
+        var usDate = moment(us.Date);
+        if (startDate && usDate < startDate) {
+          return false;
+        } else if (endDate && usDate > endDate) {
+          return false;
+        } else {
+          return true;
+        }
+      });
+      loadData(filteredUsage);
     });
    });
 </script>

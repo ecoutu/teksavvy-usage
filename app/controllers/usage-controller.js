@@ -29,49 +29,7 @@ _.extend(UsageController.prototype, {
     }
 
     this.teksavvyClient.getUsage(req.params.api_key).then(function(usage) {
-      var xAxis = ['x'];
-
-      var onPeakDownload = ['On Peak Download'];
-      var onPeakUpload = ['On Peak Upload'];
-      var offPeakDownload = ['Off Peak Download'];
-      var offPeakUpload = ['Off Peak Upload'];
-
-      usage = _.filter(usage, function(us) {
-        var usDate = moment(us.Date);
-        if (startDate && usDate < startDate) {
-          return false;
-        } else if (endDate && usDate > endDate) {
-          return false;
-        } else {
-          return true;
-        }
-      });
-
-      _.each(usage, function(us) {
-        var uDate = moment(us.Date);
-
-        if (startDate && uDate < startDate) {
-          logger.info('%s is less than %s', uDate, startDate);
-        }
-        if (endDate && uDate > endDate) {
-          logger.info('%s is greater than %s', uDate, endDate);
-        }
-
-        // need to change date format - c3's date parsing sucks
-        xAxis.push(moment(us.Date).format('YYYY-MM-DD'));
-        onPeakDownload.push(us.OnPeakDownload);
-        onPeakUpload.push(us.OnPeakUpload);
-        offPeakDownload.push(us.OffPeakDownload)
-        offPeakUpload.push(us.OffPeakUpload);
-      });
-
-      res.send({
-        xAxis: xAxis,
-        onPeakDownload: onPeakDownload,
-        onPeakUpload: onPeakUpload,
-        offPeakDownload: offPeakDownload,
-        offPeakUpload: offPeakUpload
-      });
+      res.send(usage);
     }, function(err) {
       logger.error('Unable to fetch usage: %s', err);
       res.send(500);
