@@ -1,0 +1,34 @@
+{
+  "name": "teksavvy",
+  "version": "0.0.0",
+  "authors": [
+    "Eric Coutu <eric.coutu@gmail.com>"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.1",
+    "underscore": "~1.6.0",
+    "backbone": "~1.1.2",
+    "ractive": "~0.5.5",
+    "requirejs": "~2.1.14",
+    "ractive-adaptors-backbone": "~0.1.1",
+    "requirejs-text": "~2.0.12",
+    "requirejs-plugins": "~1.0.2",
+    "sifter": "~0.3.3",
+    "moment": "~2.8.1",
+    "bootstrap": "~3.2.0",
+    "c3": "~0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.20.1",
+    "chai": "~1.9.1"
+  }
+}

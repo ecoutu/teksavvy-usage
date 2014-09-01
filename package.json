@@ -1,5 +1,5 @@
 {
-  "name": "teksavvy",
+  "name": "teksavvy-usage",
   "version": "0.0.0",
   "description": "",
   "main": "app/index.js",
@@ -18,9 +18,9 @@
     "bunyan": "^1.0.1",
     "bunyan-syslog": "^0.2.2",
     "express": "^4.4.5",
+    "express-bunyan-logger": "^1.0.0",
     "method-override": "^2.1.2",
     "moment": "~2.8.1",
-    "morgan": "^1.2.0",
     "request": "^2.39.0",
     "rsvp": "^3.0.9",
     "underscore": "^1.6.0"
