@@ -18,16 +18,6 @@ var UsageController = function(options) {
 
 _.extend(UsageController.prototype, {
   usage: function(req, res) {
-    var startDate = null;
-    var endDate =  null;
-
-    if (req.query.start) {
-      startDate = moment(req.query.start);
-    }
-    if (req.query.end) {
-      endDate = moment(req.query.end);
-    }
-
     this.teksavvyClient.getUsage(req.params.api_key).then(function(usage) {
       res.send(usage);
     }, function(err) {
