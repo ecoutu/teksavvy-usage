@@ -15,6 +15,7 @@ RSVP.on('error', function(reason){
 });
 
 var app = express();
+var address = process.env.ADDRESS || '0.0.0.0';
 var port = process.env.PORT || 8080;
 
 app.use(require('express-bunyan-logger')({
@@ -51,4 +52,4 @@ app.get('/usage/:api_key', function(req, res) {
 });
 
 logger.info('Express listening on port %d', port);
-app.listen(port);
+app.listen(port, address);
