@@ -51,5 +51,7 @@ app.get('/usage/:api_key', function(req, res) {
   usageController.usage.apply(usageController, arguments);
 });
 
-logger.info('Express listening on port %d', port);
-app.listen(port, address);
+
+app.listen(port, address, function() {
+  logger.info('Express listening on %s:%d', address, port);
+});
