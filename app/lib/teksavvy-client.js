@@ -1,6 +1,6 @@
 var _ = require('underscore');
-var RSVP = require('rsvp');
 var request = require('request');
+var RSVP = require('rsvp');
 
 var logger = require('../utility/logger').createLogger('teksavvy-client');
 

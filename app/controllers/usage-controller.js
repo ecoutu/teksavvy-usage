@@ -1,7 +1,4 @@
 var _ = require('underscore');
-var moment = require('moment');
-var momentRange = require('moment-range');
-var RSVP = require('rsvp');
 
 var logger = require('../utility/logger').createLogger('teksavvy-client');
 
