@@ -158,16 +158,37 @@
   display: none;
   float: left;
 }
+
 #filter-menu {
   display:none;
   float: left;
   padding-left: 50px;
 }
+
+label, input.filter-input {
+  float: left;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 13px;
+}
+
+label {
+  width: 50px;
+  padding-top: 3px;
+  color: #404040;
+  line-height: 18px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+.input-line {
+  padding: 5px;
+  clear: left;
+}
 </style>
  </head>
 <body>
 <div>
-  API Key <input type="text" id="api-key"></input> <input type="button" value="Submit" id="submit"></input>
+  API Key <input type="text" id="api-key" value="8C2A92AA9A08B06EFD9A6CCEB37D7606"></input> <input type="button" value="Submit" id="submit"></input>
 </div>
 <div id="chart"></div>
 <div id="selection-menu">
@@ -177,8 +198,14 @@
   <input type="checkbox" id="off-peak-upload" checked="true">Off Peak Upload</input><br />
 </div>
 <div id="filter-menu">
-  <input type="checkbox" id="start-date-filter-enabled">Start</input> <input type="date" id="start-date-filter" disabled="disabled"></input><br />
-  <input type="checkbox" id="end-date-filter-enabled">End&nbsp;</input> <input type="date" id="end-date-filter" disabled="disabled"></input><br />
+  <div class="input-line">
+    <label for="start-date-filter">Start</label>
+    <input type="date" id="start-date-filter" class="filter-input"></input>
+  </div>
+  <div class="input-line">
+    <label for="end-date-filter">End</label>
+    <input type="date" id="end-date-filter" class="filter-input"></input>
+  </div>
 </div>
 </body>
 </html>
