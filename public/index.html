@@ -14,7 +14,22 @@
 
   var chart = null;
   var usage = null;
+  var params = null;
   $(document).ready(function() {
+
+    var parseQueryString = function() {
+      var params_ = {};
+      var hash;
+      var q = document.URL.split('?')[1];
+      if (q !== undefined) {
+        q = q.split('&');
+        for (var i = 0; i < q.length; i++) {
+          hash = q[i].split('=');
+          params_[hash[0]] = hash[1];
+        }
+      }
+      return params_;
+    };
 
     var loadData = function(usage) {
       var xAxis = ['x'];
@@ -29,6 +44,7 @@
 
         // need to change date format - c3's date parsing sucks
         xAxis.push(moment(us.Date).format('YYYY-MM-DD'));
+
         onPeakDownload.push(us.OnPeakDownload);
         onPeakUpload.push(us.OnPeakUpload);
         offPeakDownload.push(us.OffPeakDownload)
@@ -90,6 +106,12 @@
         $('#submit').click();
       }
     });
+
+    params = parseQueryString();
+    if (!_.isUndefined(params['api-key'])) {
+      $('#api-key').val(params['api-key']);
+      $('#submit').click();
+    }
 
     $('#start-date-filter, #end-date-filter').change(function() {
       var startDate = $('#start-date-filter').val();
