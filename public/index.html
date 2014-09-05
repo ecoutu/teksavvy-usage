@@ -130,7 +130,7 @@
   width: 25em;
 }
 
-label, input.filter-input {
+label, input.labeled {
   float: left;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size: 13px;
@@ -149,21 +149,25 @@ label {
   padding: 5px;
   clear: left;
 }
+
+#submit {
+  margin-left: 10px;
+}
 </style>
  </head>
 <body>
 <div id="top-bar">
-  <label for="api-key">API Key</label><input type="text" id="api-key"></input> <input type="button" value="Submit" id="submit"></input>
+  <label for="api-key">API Key</label><input type="text" id="api-key" class="labeled"></input> <input type="button" value="Submit" id="submit"></input>
 </div>
 <div id="chart"></div>
 <div id="filter-menu">
   <div class="input-line">
     <label for="start-date-filter">Start Date</label>
-    <input type="date" id="start-date-filter" class="filter-input"></input>
+    <input type="date" id="start-date-filter" class="labeled"></input>
   </div>
   <div class="input-line">
     <label for="end-date-filter">End Date</label>
-    <input type="date" id="end-date-filter" class="filter-input"></input>
+    <input type="date" id="end-date-filter" class="labeled"></input>
   </div>
 </div>
 </body>
