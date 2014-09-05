@@ -11,6 +11,7 @@
  <script src="js/bower_components/moment/moment.js"></script>
  <script src="js/bower_components/underscore/underscore.js"></script>
  <script type="text/javascript">
+
   var chart = null;
   $(document).ready(function() {
     var usage = null;
@@ -44,7 +45,7 @@
       });
     };
 
-    $('#submit').click(function() {
+    var submit = function() {
       var apiKey = $('#api-key').val();
       $.getJSON('usage/'+apiKey, function(res) {
         usage = res;
@@ -74,7 +75,16 @@
         $('#selection-menu').show();
         $('#filter-menu').show();
       });
+    };
+
+    $('#api-key').focus();
+    $('#submit').click(submit);
+    $('#api-key').keypress(function(e) {
+      if (e.which === 13) {
+        $('#submit').click();
+      }
     });
+
     $('#on-peak-download').click(function() {
       if (this.checked) {
         chart.show('On Peak Download');
