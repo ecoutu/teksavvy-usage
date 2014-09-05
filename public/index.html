@@ -13,8 +13,8 @@
  <script type="text/javascript">
 
   var chart = null;
+  var usage = null;
   $(document).ready(function() {
-    var usage = null;
 
     var loadData = function(usage) {
       var xAxis = ['x'];
@@ -49,6 +49,12 @@
       var apiKey = $('#api-key').val();
       $.getJSON('usage/'+apiKey, function(res) {
         usage = res;
+
+        var minDate = _.min(usage, function(us) { return moment(us.Date); });
+        var maxDate = _.max(usage, function(us) { return moment(us.Date); });
+
+        $('#start-date-filter').val(moment(minDate.Date).format('YYYY-MM-DD'));
+        $('#end-date-filter').val(moment(maxDate.Date).format('YYYY-MM-DD'));
 
         chart = c3.generate({
           bindto: '#chart',
@@ -113,22 +119,7 @@
         chart.hide('Off Peak Upload');
       }
     });
-    $('#start-date-filter-enabled').click(function() {
-      if (this.checked) {
-        $('#start-date-filter').removeAttr('disabled');
-      } else {
-        $('#start-date-filter').attr('disabled', 'disabled');
-      }
-    });
-    $('#end-date-filter-enabled').click(function() {
-      if (this.checked) {
-        $('#end-date-filter').removeAttr('disabled');
-      } else {
-        $('#end-date-filter').attr('disabled', 'disabled');
-      }
-    });
     $('#start-date-filter, #end-date-filter').change(function() {
-
       var startDate = $('#start-date-filter').val();
       var endDate = $('#end-date-filter').val();
 
@@ -172,7 +163,7 @@ label, input.filter-input {
 }
 
 label {
-  width: 50px;
+  width: 5em;
   padding-top: 3px;
   color: #404040;
   line-height: 18px;
@@ -199,11 +190,11 @@ label {
 </div>
 <div id="filter-menu">
   <div class="input-line">
-    <label for="start-date-filter">Start</label>
+    <label for="start-date-filter">Start Date</label>
     <input type="date" id="start-date-filter" class="filter-input"></input>
   </div>
   <div class="input-line">
-    <label for="end-date-filter">End</label>
+    <label for="end-date-filter">End Date</label>
     <input type="date" id="end-date-filter" class="filter-input"></input>
   </div>
 </div>
