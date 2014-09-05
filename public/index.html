@@ -47,7 +47,7 @@
 
     var submit = function() {
       var apiKey = $('#api-key').val();
-      $.getJSON('usage/'+apiKey, function(res) {
+      $.getJSON('usage/' + apiKey, function(res) {
         usage = res;
 
         var minDate = _.min(usage, function(us) { return moment(us.Date); });
@@ -78,47 +78,19 @@
           }
         });
         loadData(usage);
-        $('#selection-menu').show();
         $('#filter-menu').show();
       });
     };
 
     $('#api-key').focus();
     $('#submit').click(submit);
+
     $('#api-key').keypress(function(e) {
       if (e.which === 13) {
         $('#submit').click();
       }
     });
 
-    $('#on-peak-download').click(function() {
-      if (this.checked) {
-        chart.show('On Peak Download');
-      } else {
-        chart.hide('On Peak Download');
-      }
-    });
-    $('#on-peak-upload').click(function() {
-      if (this.checked) {
-        chart.show('On Peak Upload');
-      } else {
-        chart.hide('On Peak Upload');
-      }
-    });
-    $('#off-peak-download').click(function() {
-      if (this.checked) {
-        chart.show('Off Peak Download');
-      } else {
-        chart.hide('Off Peak Download');
-      }
-    });
-    $('#off-peak-upload').click(function() {
-      if (this.checked) {
-        chart.show('Off Peak Upload');
-      } else {
-        chart.hide('Off Peak Upload');
-      }
-    });
     $('#start-date-filter, #end-date-filter').change(function() {
       var startDate = $('#start-date-filter').val();
       var endDate = $('#end-date-filter').val();
@@ -145,15 +117,17 @@
    });
 </script>
 <style>
-#selection-menu {
-  display: none;
-  float: left;
+#top-bar {
+  padding-bottom: 20px;
 }
 
 #filter-menu {
   display:none;
-  float: left;
   padding-left: 50px;
+}
+
+#api-key {
+  width: 25em;
 }
 
 label, input.filter-input {
@@ -178,16 +152,10 @@ label {
 </style>
  </head>
 <body>
-<div>
-  API Key <input type="text" id="api-key" value="8C2A92AA9A08B06EFD9A6CCEB37D7606"></input> <input type="button" value="Submit" id="submit"></input>
+<div id="top-bar">
+  <label for="api-key">API Key</label><input type="text" id="api-key"></input> <input type="button" value="Submit" id="submit"></input>
 </div>
 <div id="chart"></div>
-<div id="selection-menu">
-  <input type="checkbox" id="on-peak-download" checked="true">On Peak Download</input><br />
-  <input type="checkbox" id="on-peak-upload" checked="true">On Peak Upload</input><br />
-  <input type="checkbox" id="off-peak-download" checked="true">Off Peak Download</input><br />
-  <input type="checkbox" id="off-peak-upload" checked="true">Off Peak Upload</input><br />
-</div>
 <div id="filter-menu">
   <div class="input-line">
     <label for="start-date-filter">Start Date</label>
