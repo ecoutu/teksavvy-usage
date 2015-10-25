@@ -34,29 +34,65 @@
     var loadData = function(usage) {
       var xAxis = ['x'];
 
-      var onPeakDownload = ['On Peak Download'];
-      var onPeakUpload = ['On Peak Upload'];
+      var peakDownload = ['On Peak Download'];
+      var peakUpload = ['On Peak Upload'];
       var offPeakDownload = ['Off Peak Download'];
       var offPeakUpload = ['Off Peak Upload'];
 
-      _.each(usage, function(us) {
-        var uDate = moment(us.Date);
+      var peakDownloadSum = ['On Peak Download Sum'];
+      var peakUploadSum = ['On Peak Upload Sum'];
+      var offPeakDownloadSum = ['Off Peak Download Sum'];
+      var offPeakUploadSum = ['Off Peak Upload Sum'];
+
+      _.each(usage, function(us, idx) {
+        var datePoint = moment(us.Date);
 
         // need to change date format - c3's date parsing sucks
-        xAxis.push(moment(us.Date).format('YYYY-MM-DD'));
+        xAxis.push(datePoint.format('YYYY-MM-DD'));
 
-        onPeakDownload.push(us.OnPeakDownload);
-        onPeakUpload.push(us.OnPeakUpload);
+        peakDownload.push(us.OnPeakDownload);
+        peakUpload.push(us.OnPeakUpload);
         offPeakDownload.push(us.OffPeakDownload)
         offPeakUpload.push(us.OffPeakUpload);
       });
+
+      var grouped = _.groupBy(usage, function(usagePeriod) {
+        var d = moment(usagePeriod.Date);
+        return d.year() + '/' + d.month();
+      });
+
+      _.each(grouped, function(usagePeriod) {
+        var peakDownloadMonthlySum = 0;
+        var peakUploadMonthlySum = 0;
+        var offPeakDownloadMonthlySum = 0;
+        var offPeakUploadMonthlySum = 0;
+
+        _.each(usagePeriod, function(dataPoint) {
+          peakDownloadMonthlySum += dataPoint.OnPeakDownload;
+          peakDownloadSum.push(peakDownloadMonthlySum);
+
+          peakUploadMonthlySum += dataPoint.OnPeakUpload;
+          peakUploadSum.push(peakUploadMonthlySum);
+
+          offPeakDownloadMonthlySum += dataPoint.OffPeakDownload;
+          offPeakDownloadSum.push(offPeakDownloadMonthlySum);
+
+          offPeakUploadMonthlySum += dataPoint.OffPeakUpload;
+          offPeakUploadSum.push(offPeakUploadMonthlySum);
+        });
+      });
+
       chart.load({
         columns: [
           xAxis,
-          onPeakDownload,
-          onPeakUpload,
+          peakDownload,
+          peakUpload,
           offPeakDownload,
-          offPeakUpload
+          offPeakUpload,
+          peakDownloadSum,
+          peakUploadSum,
+          offPeakDownloadSum,
+          offPeakUploadSum
         ]
       });
     };
