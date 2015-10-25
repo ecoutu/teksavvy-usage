@@ -114,6 +114,14 @@
             x: 'x',
             columns: []
           },
+          point: {
+            r: 1,
+            focus: {
+              expand: {
+                r: 5
+              }
+            }
+          },
           axis: {
             x: {
               type: 'timeseries',
@@ -186,6 +194,29 @@
 
 #api-key {
   width: 25em;
+}
+
+.c3-axis-x .domain, .c3-axis-y .domain, .c3-axis-x .tick line, .c3-axis-y .tick line {
+  display: none;
+}
+
+.c3-axis.c3-axis-y {
+  transform: translate(-15px, 0px);
+  -webkit-transform: translate(-15px, 0px);
+}
+
+.c3-chart-lines .c3-line {
+  stroke-width: 2px;
+}
+
+.tick text {
+  font-size: 0.75rem;
+  font-weight: bold;
+  fill: #9e9e9e;
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 label, input.labeled {
