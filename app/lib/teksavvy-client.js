@@ -1,7 +1,9 @@
 var _ = require('underscore');
 var request = require('request');
 var RSVP = require('rsvp');
-
+require('ssl-root-cas')
+    .inject()
+    .addFile(__dirname + '../../../DigiCertSHA2HighAssuranceServerCA.pem');
 var logger = require('../utility/logger').createLogger('teksavvy-client');
 
 var TeksavvyClient = function(options) {
