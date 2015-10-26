@@ -1,7 +1,9 @@
 teksavvy
 ========
 
-Usage charts for Teksavvy Internet
+![](https://raw.githubusercontent.com/ecoutu/teksavvy-usage/master/teksavvy-usage.png)
+
+Pretty usage charts for Teksavvy Internet. 
 
 # Setup
 
@@ -22,3 +24,5 @@ node app/index.js
 ```
 
 Visit `localhost:8080` and enter your Teksavvy API key.
+
+If you want to save a bookmark, you can use the `api-key=xxx` query parameter in the webapp, eg: http://localhost:8080/?api-key=xxx
