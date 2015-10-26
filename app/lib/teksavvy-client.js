@@ -16,7 +16,10 @@ var TeksavvyClient = function(options) {
 
 _.extend(TeksavvyClient.prototype, {
   getUsage: function(apiKey) {
-    var headers = {'Teksavvy-APIKey': apiKey};
+    var headers = {
+      'Teksavvy-APIKey': apiKey,
+      'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.80 Safari/537.36'
+    };
 
     var deferred = RSVP.defer();
     var allUsage = [];
