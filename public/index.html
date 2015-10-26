@@ -93,7 +93,8 @@
           peakUploadSum,
           offPeakDownloadSum,
           offPeakUploadSum
-        ]
+        ],
+        unload: true
       });
     };
 
@@ -102,11 +103,11 @@
       $.getJSON('usage/' + apiKey, function(res) {
         usage = res;
 
-        var minDate = _.min(usage, function(us) { return moment(us.Date); });
-        var maxDate = _.max(usage, function(us) { return moment(us.Date); });
+        var minDate = moment(_.min(usage, function(us) { return moment(us.Date); }).Date);
+        var maxDate = moment(_.max(usage, function(us) { return moment(us.Date); }).Date);
 
-        $('#start-date-filter').val(moment(minDate.Date).format('YYYY-MM-DD'));
-        $('#end-date-filter').val(moment(maxDate.Date).format('YYYY-MM-DD'));
+        $('#start-date-filter').val(minDate.format('YYYY-MM-DD'));
+        $('#end-date-filter').val(maxDate.format('YYYY-MM-DD'));
 
         chart = c3.generate({
           bindto: '#chart',
@@ -126,13 +127,39 @@
             x: {
               type: 'timeseries',
               tick: {
-                format: '%Y-%m-%d'
+                format: function(date) {
+                  return moment(date).format('MMMM YYYY');
+                },
+                values: _.times(maxDate.diff(minDate, 'months') + 1, function (i) {
+                  return minDate.clone().add(i, 'months').date(15).toDate();
+                }),
+                count: 10,
+                culling: {
+                  max: 20
+                }
+              },
+              padding: {
+                left: 0,
+                right: 4000
               }
             },
             y: {
               label: {
                 text: 'Usage (GB)',
                 position: 'outer-middle'
+              },
+              padding: {
+                bottom: 0
+              }
+            }
+          },
+          tooltip: {
+            format: {
+              title: function(date) {
+               return moment(date).format('dddd, MMMM Do YYYY');
+              },
+              value: function(value) {
+                return value.toFixed(2) + ' GB';
               }
             }
           }
@@ -200,11 +227,6 @@
   display: none;
 }
 
-.c3-axis.c3-axis-y {
-  transform: translate(-15px, 0px);
-  -webkit-transform: translate(-15px, 0px);
-}
-
 .c3-chart-lines .c3-line {
   stroke-width: 2px;
 }
@@ -213,10 +235,6 @@
   font-size: 0.75rem;
   font-weight: bold;
   fill: #9e9e9e;
-}
-
-.hidden {
-  visibility: hidden;
 }
 
 label, input.labeled {
