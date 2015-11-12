@@ -17,7 +17,6 @@
     "method-override": "^2.1.2",
     "request": "^2.39.0",
     "rsvp": "^3.0.9",
-    "ssl-root-cas": "^1.1.10",
     "underscore": "^1.6.0"
   }
 }
