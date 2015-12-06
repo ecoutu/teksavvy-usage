@@ -113,7 +113,17 @@
           bindto: '#chart',
           data: {
             x: 'x',
-            columns: []
+            columns: [],
+            axes: {
+              'On Peak Download': 'y',
+              'On Peak Upload': 'y',
+              'Off Peak Download': 'y',
+              'Off Peak Upload': 'y',
+              'On Peak Download Sum': 'y2',
+              'On Peak Upload Sum': 'y2',
+              'Off Peak Download Sum': 'y2',
+              'Off Peak Upload Sum': 'y2'
+            }
           },
           point: {
             r: 1,
@@ -145,7 +155,17 @@
             },
             y: {
               label: {
-                text: 'Usage (GB)',
+                text: 'Daily Usage (GB)',
+                position: 'outer-middle'
+              },
+              padding: {
+                bottom: 0
+              }
+            },
+            y2: {
+              show: true,
+              label: {
+                text: 'Monthly Usage (GB)',
                 position: 'outer-middle'
               },
               padding: {
@@ -223,7 +243,12 @@
   width: 25em;
 }
 
-.c3-axis-x .domain, .c3-axis-y .domain, .c3-axis-x .tick line, .c3-axis-y .tick line {
+.c3-axis-x .domain,
+.c3-axis-y .domain,
+.c3-axis-y2 .domain,
+.c3-axis-x .tick line,
+.c3-axis-y .tick line,
+.c3-axis-y2 .tick line {
   display: none;
 }
 
