@@ -1,7 +1,7 @@
 teksavvy
 ========
 
-![](https://raw.githubusercontent.com/ecoutu/teksavvy-usage/master/teksavvy-usage.png)
+![](/teksavvy-usage.png?raw=true)
 
 Pretty usage charts for Teksavvy Internet. 
 
