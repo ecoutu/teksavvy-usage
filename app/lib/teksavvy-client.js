@@ -1,6 +1,7 @@
 var _ = require('underscore');
 var request = require('request');
 var RSVP = require('rsvp');
+var URI = require('urijs');
 var logger = require('../utility/logger').createLogger('teksavvy-client');
 
 var TeksavvyClient = function(options) {
@@ -32,7 +33,7 @@ _.extend(TeksavvyClient.prototype, {
         }, function(err, res, body) {
           if (err || !/2\d\d/.test(res.statusCode)) {
             logger.error('%d error when requesting usage: %s', res ? res.statusCode : 500, err);
-            reject(res ? res.statusCode : 500);
+            reject(new Error(err));
           } else {
             resolve(body);
           }
@@ -41,7 +42,7 @@ _.extend(TeksavvyClient.prototype, {
         logger.debug('Retrieved %d usage records', usage.value.length);
         allUsage = allUsage.concat(usage.value);
         if (usage['odata.nextLink']) {
-          url = usage['odata.nextLink'];
+          url = new URI(usage['odata.nextLink']).scheme('https').toString();
           fetch();
         } else {
           deferred.resolve(allUsage);
