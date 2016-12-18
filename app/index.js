@@ -1,5 +1,4 @@
 var bodyParser = require('body-parser');
-var bsyslog = require('bunyan-syslog');
 var express = require('express');
 var methodOverride = require('method-override');
 var RSVP = require('rsvp');
@@ -21,16 +20,6 @@ var port = process.env.PORT || 8080;
 app.use(require('express-bunyan-logger')({
   name: 'teksavvy-usage',
   streams: [
-    {
-      level: 'debug',
-      type: 'raw',
-      stream: bsyslog.createBunyanStream({
-        type: 'sys',
-        facility: bsyslog.local0,
-        host: 'localhost',
-        port: 514
-      })
-    },
     {
       level: 'debug',
       stream: process.stdout
